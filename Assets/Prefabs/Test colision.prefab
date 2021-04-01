@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 741402016131957299}
   - component: {fileID: 7202931122986542644}
   - component: {fileID: 5355354708326155672}
+  - component: {fileID: -6941686024565516398}
   m_Layer: 0
   m_Name: Test colision
   m_TagString: Untagged
@@ -110,3 +111,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-6941686024565516398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6643950801130641356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaadc7aef1a1a334f98a5ca1d0cab625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,24 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class create_grid : MonoBehaviour
 {
     public Transform block;
     public Transform block_collision;
-    private int[,] grid;
     // Start is called before the first frame update
     void Start()
     {
-        createGrid(10, 10);
+        //createGrid(10, 10);
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        
-    }
-
     public void createGrid(int x, int y)
     {
         for(int i = 0; i <= x; i++)
