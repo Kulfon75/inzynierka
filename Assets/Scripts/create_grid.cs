@@ -3,27 +3,23 @@ using UnityEngine;
 public class create_grid : MonoBehaviour
 {
     public Transform block;
-    public Transform block_collision;
+    public Canvas hud;
     // Start is called before the first frame update
     void Start()
     {
-        //createGrid(10, 10);
+        createGrid(10, 10, 20);
     }
-    public void createGrid(int x, int y)
+    public void createGrid(int x, int y, int width)
     {
-        for(int i = 0; i <= x; i++)
+        for (int i = 0; i < x; i++)
         {
-            for(int j = 0; j <= y; j++)
-            {
-                if(i == 0 || j == 0 || i == x || j == y)
-                {
-                    Instantiate(block_collision, new Vector3(i * 2.0f, j * 2.0f, 1), Quaternion.identity);
-                }
-                else
-                {
-                    Instantiate(block, new Vector3(i * 2.0f, j * 2.0f, 1), Quaternion.identity);
-                }    
+            for(int j = 0; j < y; j++)
+            {  
+                Transform foo = Instantiate(block, new Vector3(i * width, j * width, 1), Quaternion.identity);
+                foo.GetComponent<mouse_block>().placeX = i + 1;
+                foo.GetComponent<mouse_block>().placeY = j + 1;
             }
         }
+        hud.GetComponentInChildren<place_room>().setTakenFalse(x,y);
     }
 }
