@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6471378226017378979}
   m_Layer: 0
   m_Name: Test Square
-  m_TagString: Untagged
+  m_TagString: PlaceRoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   placeY: 0
   colide: 0
   hud: {fileID: 0}
-  Wall: {fileID: 1150180240463591636, guid: 231381d1cdae14e47b3665cf8ceb547c, type: 3}
+  Wall: {fileID: 0}
 --- !u!61 &6471378226017378979
 BoxCollider2D:
   m_ObjectHideFlags: 0

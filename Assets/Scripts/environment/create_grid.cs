@@ -47,7 +47,6 @@ public class create_grid : MonoBehaviour
             }
         }
         hud.GetComponentInChildren<place_room>().setTakenFalse(x,y);
-        hud.enabled = true;
         hud.GetComponent<hud>().block = GameObject.Find("boss_chamber(Clone)");
         hud.GetComponentInChildren<place_room>().OnPointerDown(null);
         hud.GetComponent<hud>().block = GameObject.Find("enemy_spawn(Clone)");
