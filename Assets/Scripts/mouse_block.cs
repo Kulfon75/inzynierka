@@ -114,7 +114,6 @@ public class mouse_block : MonoBehaviour
                         foo.transform.localPosition = new Vector3(-0.45f, 0, -1);
                         break;
                     case 1:
-
                         foo.transform.localScale = new Vector3(1, 0.1f, 1);
                         foo.transform.localPosition = new Vector3(0, 0.45f, -1);
                         break;

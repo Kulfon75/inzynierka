@@ -62,17 +62,24 @@ public class movement_board : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if(hit != false)
+            if(hit != false && (hit.transform.tag == "PlaceRoom" || hit.transform.tag == "Room"))
             {
                 hit.transform.gameObject.GetComponent<mouse_block>().IsActive(false);
             }
             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.right, 0.1f); //ustawia raycast na pozycje myszki
-            if (hit != false)
+            if (hit != false && (hit.transform.tag == "PlaceRoom" || hit.transform.tag == "Room"))
             {
-                hit.transform.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                hud.enabled = true;
-                hud.GetComponent<hud>().block = hit.transform.gameObject;
-                hit.transform.gameObject.GetComponent<mouse_block>().IsActive(true);
+                if(hit.transform.tag == "PlaceRoom")
+                {
+                    hit.transform.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                    hud.enabled = true;
+                    hud.GetComponent<hud>().block = hit.transform.gameObject;
+                    hit.transform.gameObject.GetComponent<mouse_block>().IsActive(true);
+                }
+                else
+                {
+                    //wprowadzic dodawania plapek - wyswietlanie sie odpowiedniego okna do dodawania ich (przeciaganie myszka na odpowiednie miejsce w pokoju? fokusowanie kamery na dany pokuj i lokowanie jej w tym miejscu?)
+                }
             }
             else
             {

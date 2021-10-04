@@ -4,12 +4,15 @@ using UnityEngine.EventSystems;
 public class place_room : MonoBehaviour, IPointerDownHandler
 {
     public GameObject room;
+    public GameObject enemy_spawn;
+    public GameObject boss_chamber;
     private Vector3 position_on_board;
     public Grid position_in_array;
     private int pos_array_x;
     private int pos_array_y;
     public bool[,] isTaken;
     public GameObject[,] floorOb;
+    public GameObject floor;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,12 +33,26 @@ public class place_room : MonoBehaviour, IPointerDownHandler
             isTaken[pos_array_x, pos_array_y] = true;
             position_on_board = GetComponentInParent<hud>().block.transform.position;
             Destroy(GetComponentInParent<hud>().block);
+            if (GetComponentInParent<hud>().block.name == "boss_chamber(Clone)")
+            {
+                floor = Instantiate(boss_chamber, position_on_board, Quaternion.identity);
+            }
+            else
+            {
+                if(GetComponentInParent<hud>().block.gameObject.name == "enemy_spawn(Clone)")
+                {
+                    floor = Instantiate(enemy_spawn, position_on_board, Quaternion.identity);
+                }
+                else
+                {
+                    floor = Instantiate(room, position_on_board, Quaternion.identity);
+                }
+            }
             GetComponentInParent<hud>().block = null;
-            GameObject foo = Instantiate(room, position_on_board, Quaternion.identity);
-            foo.GetComponent<mouse_block>().placeX = pos_array_x;
-            foo.GetComponent<mouse_block>().placeY = pos_array_y;
-            foo.GetComponent<mouse_block>().colide = true;
-            SetArrayValueFloor(pos_array_x, pos_array_y, foo.gameObject);
+            floor.GetComponent<mouse_block>().placeX = pos_array_x;
+            floor.GetComponent<mouse_block>().placeY = pos_array_y;
+            floor.GetComponent<mouse_block>().colide = true;
+            SetArrayValueFloor(pos_array_x, pos_array_y, floor.gameObject);
         }
     }
     public void setTakenFalse(int x, int y)

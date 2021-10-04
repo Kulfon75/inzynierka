@@ -59,9 +59,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5806166788794117255, guid: 682d301b02c2dc14c863ead2f9403384, type: 3}
+      propertyPath: m_Color.b
+      value: 255
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806166788794117255, guid: 682d301b02c2dc14c863ead2f9403384, type: 3}
+      propertyPath: m_Color.g
+      value: 255
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806166788794117255, guid: 682d301b02c2dc14c863ead2f9403384, type: 3}
+      propertyPath: m_Color.r
+      value: 255
+      objectReference: {fileID: 0}
     - target: {fileID: 7806708399455325789, guid: 682d301b02c2dc14c863ead2f9403384, type: 3}
       propertyPath: m_Name
-      value: Test_Block Variant
+      value: floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806708399455325789, guid: 682d301b02c2dc14c863ead2f9403384, type: 3}
+      propertyPath: m_TagString
+      value: PlaceRoom
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 682d301b02c2dc14c863ead2f9403384, type: 3}
