@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8685289851650775776}
   - component: {fileID: 6908423945208417391}
   - component: {fileID: -6495503953938743102}
+  - component: {fileID: -558214193851691106}
   m_Layer: 0
   m_Name: TestRoom
   m_TagString: Room
@@ -101,3 +102,29 @@ MonoBehaviour:
   colide: 0
   hud: {fileID: 0}
   Wall: {fileID: 1150180240463591636, guid: 231381d1cdae14e47b3665cf8ceb547c, type: 3}
+--- !u!61 &-558214193851691106
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8294173101214001572}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

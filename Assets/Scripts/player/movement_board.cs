@@ -9,30 +9,32 @@ public class movement_board : MonoBehaviour
     private int sensitivity = 3;
     public float mousePositionX;
     public float mousePositionY;
+    private bool cameraMovementBlock;
     public Canvas hud;
+    private hud hudVariables;
     private RaycastHit2D hit;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         hud.enabled = false;
+        cameraMovementBlock = false;
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         player = GameObject.FindGameObjectWithTag("Player");
+        hudVariables = hud.GetComponent<hud>();
     }
 
-    // FixedUpdate is called multiple times per frame
-    void FixedUpdate()
-    {
-        
-    }
-    // Update is  called once per frame
+    
     private void Update()
     {
         MouseX = Input.GetAxisRaw("Mouse X");
         MouseY = Input.GetAxisRaw("Mouse Y");
         if (Input.GetKey(KeyCode.Mouse0)) //przesuwa kamera przy trzymaniu myszki
         {
-            camera.GetComponent<Transform>().position = new Vector3(camera.GetComponent<Transform>().position.x - (MouseX / sensitivity * camera.GetComponent<Camera>().orthographicSize / 3), camera.GetComponent<Transform>().position.y - (MouseY / sensitivity * camera.GetComponent<Camera>().orthographicSize / 3), -10);
+            if (!cameraMovementBlock)
+            {
+                camera.GetComponent<Transform>().position = new Vector3(camera.GetComponent<Transform>().position.x - (MouseX / sensitivity * camera.GetComponent<Camera>().orthographicSize / 3), camera.GetComponent<Transform>().position.y - (MouseY / sensitivity * camera.GetComponent<Camera>().orthographicSize / 3), -10);
+            }
         }
         if (Input.GetKey(KeyCode.R))
         {
@@ -40,14 +42,7 @@ public class movement_board : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.T)) //wlacza / wylacza skrypt
         {
-            if (player.GetComponent<movement>().enabled == false)
-            {
-                player.GetComponent<movement>().enabled = true;
-            }
-            else
-            {
-                player.GetComponent<movement>().enabled = false;
-            }
+            cameraMovementBlock = !cameraMovementBlock;
         }
         if (Input.mouseScrollDelta.y != 0)
         {
@@ -62,28 +57,24 @@ public class movement_board : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if(hit != false && (hit.transform.tag == "PlaceRoom" || hit.transform.tag == "Room"))
+            if (hit != false && (hit.transform.tag == "PlaceRoom" || hit.transform.tag == "Room"))
             {
                 hit.transform.gameObject.GetComponent<mouse_block>().IsActive(false);
             }
             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.right, 0.1f); //ustawia raycast na pozycje myszki
+            Debug.Log(hit.transform.gameObject.tag);
             if (hit != false && (hit.transform.tag == "PlaceRoom" || hit.transform.tag == "Room"))
             {
-                if(hit.transform.tag == "PlaceRoom")
-                {
-                    hit.transform.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                    hud.enabled = true;
-                    hud.GetComponent<hud>().block = hit.transform.gameObject;
-                    hit.transform.gameObject.GetComponent<mouse_block>().IsActive(true);
-                }
-                else
-                {
-                    //wprowadzic dodawania plapek - wyswietlanie sie odpowiedniego okna do dodawania ich (przeciaganie myszka na odpowiednie miejsce w pokoju? fokusowanie kamery na dany pokuj i lokowanie jej w tym miejscu?)
-                }
+                hit.transform.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                hud.enabled = true;
+                hudVariables.block = hit.transform.gameObject;
+                hudVariables.isChecked = true;
+                hit.transform.gameObject.GetComponent<mouse_block>().IsActive(true);
             }
             else
             {
                 hud.enabled = false;
+                hudVariables.isChecked = false;
             }
         }
     }

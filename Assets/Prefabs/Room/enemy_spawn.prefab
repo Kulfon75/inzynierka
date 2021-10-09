@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6890123175338943306}
   - component: {fileID: 6890123175338943309}
   - component: {fileID: 2536181762656779550}
+  - component: {fileID: -114797583923317889}
   m_Layer: 0
   m_Name: enemy_spawn
   m_TagString: Untagged
@@ -73,14 +74,14 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.00055480003, a: 1}
+  m_Sprite: {fileID: -6007857137893288414, guid: 83c73b547c010e746bfeb091da9af40a, type: 3}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_AdaptiveModeThreshold: 1
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
@@ -101,3 +102,29 @@ MonoBehaviour:
   colide: 0
   hud: {fileID: 0}
   Wall: {fileID: 1150180240463591636, guid: 231381d1cdae14e47b3665cf8ceb547c, type: 3}
+--- !u!61 &-114797583923317889
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890123175338943308}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.29492188, y: 0.29296875}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 1
+    drawMode: 2
+    adaptiveTiling: 1
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.29492188, y: 0.29296875}
+  m_EdgeRadius: 0

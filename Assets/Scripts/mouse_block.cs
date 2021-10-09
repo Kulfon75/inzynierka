@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class mouse_block : MonoBehaviour
 {
-    private Color block_color;
     private Color start_block_color;
-    public int placeX;
-    public int placeY;
+    public int placeX, placeY;
     public bool colide = false;
     private bool placed = false;
-    public GameObject hud;
-    public GameObject Wall;
+    public GameObject hud, Wall;
+    private hud hudVariables;
     private Vector3 position;
+    private Vector4 oldColor;
     void Start()
     {
         hud = GameObject.FindGameObjectWithTag("Hud");
+        hudVariables = hud.GetComponent<hud>();
         start_block_color = GetComponent<SpriteRenderer>().color;
-        block_color = GetComponent<SpriteRenderer>().color;
+        oldColor = GetComponent<SpriteRenderer>().color;
         if(colide)
         {
             PlaceWallsDirections();
@@ -25,24 +25,38 @@ public class mouse_block : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<SpriteRenderer>().color = new Vector4(oldColor.x, oldColor.y, oldColor.z, 0.5f);
     }
+
     private void OnMouseExit()
     {
-        GetComponent<SpriteRenderer>().color = block_color;
+        GetComponent<SpriteRenderer>().color = oldColor;
     }
+
+    private void OnMouseDown()
+    {
+        if(hudVariables.checkType == 1)
+        {
+            hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(placeX, placeY, this.gameObject);
+        }
+        if(hudVariables.checkType == 2)
+        {
+            hud.GetComponentInChildren<place_room>().destroyRoom(placeX, placeY, this.gameObject);
+        }
+    }
+
     public void IsActive(bool is_active)
     {
         if(!is_active)
         {
-            block_color = start_block_color;
-            GetComponent<SpriteRenderer>().color = block_color;
+            GetComponent<SpriteRenderer>().color = oldColor;
         }
         else
         {
-            block_color = Color.blue;
+            oldColor = Color.blue;
         }
     }
+
     public void PlaceWallsDirections()
     {
         foreach (Transform child in this.transform)
@@ -98,6 +112,7 @@ public class mouse_block : MonoBehaviour
             PlaceWalls(3, false);
         }
     }
+
     public void PlaceWalls(int wallNo, bool wallType)
     {
         if (colide)
