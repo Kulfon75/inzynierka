@@ -58,7 +58,7 @@ public class movement_board : MonoBehaviour
         {
             if (hit != false && (hit.transform.tag == "PlaceRoom" || hit.transform.tag == "Room"))
             {
-                hit.transform.gameObject.GetComponent<mouse_block>().IsActive(false);
+                hit.transform.gameObject.GetComponent<roomMenager>().IsActive(false);
             }
             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.right, 0.1f); //ustawia raycast na pozycje myszki
             Debug.Log(hit.transform.gameObject.tag);
@@ -68,7 +68,7 @@ public class movement_board : MonoBehaviour
                 hud.enabled = true;
                 hudVariables.block = hit.transform.gameObject;
                 hudVariables.isChecked = true;
-                hit.transform.gameObject.GetComponent<mouse_block>().IsActive(true);
+                hit.transform.gameObject.GetComponent<roomMenager>().IsActive(true);
             }
             else
             {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class mouse_block : MonoBehaviour
+public class roomMenager : MonoBehaviour
 {
     private Color start_block_color;
     public int placeX, placeY;
@@ -68,7 +68,7 @@ public class mouse_block : MonoBehaviour
             PlaceWalls(0, true);
             if(!placed)
             {
-                hud.GetComponentInChildren<place_room>().floorOb[placeX - 1, placeY].GetComponent<mouse_block>().PlaceWallsDirections();
+                hud.GetComponentInChildren<place_room>().floorOb[placeX - 1, placeY].GetComponent<roomMenager>().PlaceWallsDirections();
             }
         }
         else
@@ -80,7 +80,7 @@ public class mouse_block : MonoBehaviour
             PlaceWalls(1, true);
             if (!placed)
             {
-                hud.GetComponentInChildren<place_room>().floorOb[placeX, placeY + 1].GetComponent<mouse_block>().PlaceWallsDirections();
+                hud.GetComponentInChildren<place_room>().floorOb[placeX, placeY + 1].GetComponent<roomMenager>().PlaceWallsDirections();
             }
         }
         else
@@ -92,7 +92,7 @@ public class mouse_block : MonoBehaviour
             PlaceWalls(2, true);
             if (!placed)
             {
-                hud.GetComponentInChildren<place_room>().floorOb[placeX + 1, placeY].GetComponent<mouse_block>().PlaceWallsDirections();
+                hud.GetComponentInChildren<place_room>().floorOb[placeX + 1, placeY].GetComponent<roomMenager>().PlaceWallsDirections();
             }
         }
         else
@@ -104,7 +104,7 @@ public class mouse_block : MonoBehaviour
             PlaceWalls(3, true);
             if (!placed)
             {
-                hud.GetComponentInChildren<place_room>().floorOb[placeX, placeY - 1].GetComponent<mouse_block>().PlaceWallsDirections();
+                hud.GetComponentInChildren<place_room>().floorOb[placeX, placeY - 1].GetComponent<roomMenager>().PlaceWallsDirections();
             }
         }
         else

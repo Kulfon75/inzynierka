@@ -103,9 +103,9 @@ public class place_room : MonoBehaviour, IPointerDownHandler
             floor.transform.SetParent(floorRef.transform.parent);
         }
         Destroy(floorRef);
-        floor.GetComponent<mouse_block>().placeX = floorX;
-        floor.GetComponent<mouse_block>().placeY = floorY;
-        floor.GetComponent<mouse_block>().colide = true;
+        floor.GetComponent<roomMenager>().placeX = floorX;
+        floor.GetComponent<roomMenager>().placeY = floorY;
+        floor.GetComponent<roomMenager>().colide = true;
         SetArrayValueFloor(floorX, floorY, floor.gameObject);
     }
 
@@ -174,9 +174,9 @@ public class place_room : MonoBehaviour, IPointerDownHandler
             position_on_board = blockRef.transform.position;
             floor = Instantiate(plane, position_on_board, Quaternion.identity);
             Destroy(blockRef);
-            floor.GetComponent<mouse_block>().placeX = posX;
-            floor.GetComponent<mouse_block>().placeY = posY;
-            floor.GetComponent<mouse_block>().colide = false;
+            floor.GetComponent<roomMenager>().placeX = posX;
+            floor.GetComponent<roomMenager>().placeY = posY;
+            floor.GetComponent<roomMenager>().colide = false;
             SetArrayValueFloor(posX, posY, floor.gameObject);
         }
     }

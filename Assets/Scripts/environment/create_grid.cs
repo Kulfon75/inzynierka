@@ -10,31 +10,35 @@ public class create_grid : MonoBehaviour
     private int width;
     private int height;
     private int roomSize;
-    private pathFinderGrid grid;
-    private List<PathNode> openList;
-    private List<PathNode> closeList;
+
+
+    private pathFinding PathFind;
     void Start()
     {
-        width = 10;
-        height = 10;
+        width = 3;
+        height = 3;
         roomSize = 20;
         createGrid(width, height, roomSize);
-        grid = new pathFinderGrid(width * 10, height * 10, 2, transform);
+        PathFind = new pathFinding(width, height, transform);
     }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            grid.SetValue(GetMousePos(), 50);
+            Vector3 mouseWorldPos = GetMousePos();
+            PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
+            List<PathNode> path = PathFind.FindPath(0, 0, x, y);
+            if(path != null)
+            {
+                for(int i = 0; i < path.Count - 1; i++)
+                {
+                    Debug.Log(x + " " + y);
+                    Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 2f + Vector3.one * -9, new Vector3(path[i + 1].x, path[i + 1].y) * 2f + Vector3.one * -9, Color.green, 5f);
+                }
+            }
         }
     }
 
-    private List<PathNode> FindPath(int startX, int startY, int endX, int endY)
-    {
-        PathNode startNode = grid.GetGritObject(startX, startY);
-        openList = new List<PathNode> { };
-        closeList = new List<PathNode>();
-    }
     public void createGrid(int x, int y, int width)
     {
         int enemy_spawn_pos = rand.Next(0, y - 1);
@@ -49,8 +53,8 @@ public class create_grid : MonoBehaviour
             {
                 Transform floor = Instantiate(block, new Vector3(i * width, j * width, 1), Quaternion.identity);
                 floor.SetParent(this.transform);
-                floor.GetComponent<mouse_block>().placeX = i + 1;
-                floor.GetComponent<mouse_block>().placeY = j + 1;
+                floor.GetComponent<roomMenager>().placeX = i + 1;
+                floor.GetComponent<roomMenager>().placeY = j + 1;
                 if (i == x - 1 && j == enemy_spawn_pos)
                 {
                     floor.GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
@@ -77,8 +81,8 @@ public class create_grid : MonoBehaviour
         hud.GetComponentInChildren<place_room>().OnPointerDown(null);
         hud.GetComponent<hud>().block = GameObject.Find("enemy_spawn");
         hud.GetComponentInChildren<place_room>().OnPointerDown(null);*/
-        hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("boss_chamber").GetComponent<mouse_block>().placeX, GameObject.Find("boss_chamber").GetComponent<mouse_block>().placeY, GameObject.Find("boss_chamber"));
-        hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("enemy_spawn").GetComponent<mouse_block>().placeX, GameObject.Find("enemy_spawn").GetComponent<mouse_block>().placeY, GameObject.Find("enemy_spawn"));
+        hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("boss_chamber").GetComponent<roomMenager>().placeX, GameObject.Find("boss_chamber").GetComponent<roomMenager>().placeY, GameObject.Find("boss_chamber"));
+        hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeX, GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeY, GameObject.Find("enemy_spawn"));
     }
 
     public Vector3 GetMousePos()
