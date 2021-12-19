@@ -23,7 +23,6 @@ public class movement_board : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         hudVariables = hud.GetComponent<hud>();
     }
-
     
     private void Update()
     {

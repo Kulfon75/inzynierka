@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6890123175338943309}
   - component: {fileID: 2536181762656779550}
   - component: {fileID: -114797583923317889}
+  - component: {fileID: -486198818667170040}
   m_Layer: 0
   m_Name: enemy_spawn
   m_TagString: Untagged
@@ -128,3 +129,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.29492188, y: 0.29296875}
   m_EdgeRadius: 0
+--- !u!114 &-486198818667170040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890123175338943308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d18bf7b71b7764da8ef6867b8293a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

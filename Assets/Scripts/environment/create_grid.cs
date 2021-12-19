@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class create_grid : MonoBehaviour
 {
@@ -9,17 +10,31 @@ public class create_grid : MonoBehaviour
     private int width;
     private int height;
     private int roomSize;
-    private int[,] gridArray;
-    private TextMesh[,] debug;
+    private pathFinderGrid grid;
+    private List<PathNode> openList;
+    private List<PathNode> closeList;
     void Start()
     {
         width = 10;
         height = 10;
         roomSize = 20;
         createGrid(width, height, roomSize);
-        //createGridPathFinder();
+        grid = new pathFinderGrid(width * 10, height * 10, 2, transform);
+    }
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            grid.SetValue(GetMousePos(), 50);
+        }
     }
 
+    private List<PathNode> FindPath(int startX, int startY, int endX, int endY)
+    {
+        PathNode startNode = grid.GetGritObject(startX, startY);
+        openList = new List<PathNode> { };
+        closeList = new List<PathNode>();
+    }
     public void createGrid(int x, int y, int width)
     {
         int enemy_spawn_pos = rand.Next(0, y - 1);
@@ -66,22 +81,10 @@ public class create_grid : MonoBehaviour
         hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("enemy_spawn").GetComponent<mouse_block>().placeX, GameObject.Find("enemy_spawn").GetComponent<mouse_block>().placeY, GameObject.Find("enemy_spawn"));
     }
 
-    public void createGridPathFinder()
+    public Vector3 GetMousePos()
     {
-        gridArray = new int[width * roomSize / 2, height * roomSize / 2];
-        debug = new TextMesh[width * roomSize / 2, height * roomSize / 2];
-        for(int x = 0; x < gridArray.GetLength(0); x++)
-        {
-            for (int y = 0; y < gridArray.GetLength(1); y++)
-            {
-                debug[x, y] = GetComponentInParent<create_text>().CreateWordText(this.transform, gridArray[x, y].ToString(), new Vector3(x * 2 - roomSize / 2 + 1, y * 2 - roomSize / 2 + 1, 1.0f), 20, Color.red, TextAnchor.MiddleCenter);
-            }
-        }
-    }
-
-    private void setValue()
-    {
-        gridArray[5, 5] = 8;
-        debug[5, 5].text = 8.ToString();
+        Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        vec.z = 0;
+        return vec;
     }
 }
