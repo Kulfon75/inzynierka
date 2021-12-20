@@ -8,12 +8,13 @@
 
                unitycodemonkey.com
     --------------------------------------------------
- */
+ 
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey.Utils;
 
 public class Grid<TGridObject> {
 
@@ -29,7 +30,7 @@ public class Grid<TGridObject> {
     private Vector3 originPosition;
     private TGridObject[,] gridArray;
 
-    public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject, Transform parent) {
+    public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
@@ -43,13 +44,13 @@ public class Grid<TGridObject> {
             }
         }
 
-        bool showDebug = true;
+        bool showDebug = false;
         if (showDebug) {
             TextMesh[,] debugTextArray = new TextMesh[width, height];
 
             for (int x = 0; x < gridArray.GetLength(0); x++) {
                 for (int y = 0; y < gridArray.GetLength(1); y++) {
-                    debugTextArray[x, y] = CreateWordText(parent, gridArray[x, y]?.ToString(), GetWorldPosition(x, y), 10, Color.red, TextAnchor.MiddleCenter);
+                    debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 30, Color.white, TextAnchor.MiddleCenter);
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
                 }
@@ -114,17 +115,6 @@ public class Grid<TGridObject> {
         GetXY(worldPosition, out x, out y);
         return GetGridObject(x, y);
     }
-    public TextMesh CreateWordText(Transform parent, string text, Vector3 position, int fontSize, Color color, TextAnchor anchor)
-    {
-        GameObject gameObject = new GameObject("World_text", typeof(TextMesh));
-        gameObject.transform.SetParent(parent.transform);
-        Transform transform = gameObject.transform;
-        transform.localPosition = position;
-        TextMesh textMesh = gameObject.GetComponent<TextMesh>();
-        textMesh.anchor = anchor;
-        textMesh.text = text;
-        textMesh.fontSize = fontSize;
-        textMesh.color = color;
-        return textMesh;
-    }
+
 }
+*/

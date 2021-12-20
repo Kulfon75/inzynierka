@@ -5,15 +5,15 @@ using UnityEngine;
 public class pathFinderGrid<TGridObj>
 {
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
-    public class OnGridObjectChangedEventArgs : EventArgs
+    public class OnGridObjectChangedEventArgs
     {
         public int x;
         public int y;
     }
     private int width, height;
     private TGridObj[,] gridArray;
-    private float cellSize;
-    private Vector3 originPos;
+    public float cellSize;
+    public Vector3 originPos;
     private TextMesh[,] debugTextArray;
     private bool debug = true;
     private PathNode pathNode;

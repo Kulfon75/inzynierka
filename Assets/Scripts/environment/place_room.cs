@@ -178,6 +178,10 @@ public class place_room : MonoBehaviour, IPointerDownHandler
             floor.GetComponent<roomMenager>().placeY = posY;
             floor.GetComponent<roomMenager>().colide = false;
             SetArrayValueFloor(posX, posY, floor.gameObject);
+            floorOb[posX + 1, posY].GetComponent<roomMenager>().PlaceWallsDirections();
+            floorOb[posX - 1, posY].GetComponent<roomMenager>().PlaceWallsDirections();
+            floorOb[posX, posY + 1].GetComponent<roomMenager>().PlaceWallsDirections();
+            floorOb[posX, posY - 1].GetComponent<roomMenager>().PlaceWallsDirections();
         }
     }
 }

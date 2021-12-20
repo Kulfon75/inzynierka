@@ -10,8 +10,7 @@ public class create_grid : MonoBehaviour
     private int width;
     private int height;
     private int roomSize;
-
-
+    private RaycastHit2D hit;
     private pathFinding PathFind;
     void Start()
     {
@@ -27,13 +26,39 @@ public class create_grid : MonoBehaviour
         {
             Vector3 mouseWorldPos = GetMousePos();
             PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
-            List<PathNode> path = PathFind.FindPath(0, 0, x, y);
-            if(path != null)
+            List<PathNode> path = PathFind.FindPath(1, 1, x, y);
+            if (path != null)
             {
-                for(int i = 0; i < path.Count - 1; i++)
+                for (int i = 0; i < path.Count - 1; i++)
                 {
-                    Debug.Log(x + " " + y);
                     Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 2f + Vector3.one * -9, new Vector3(path[i + 1].x, path[i + 1].y) * 2f + Vector3.one * -9, Color.green, 5f);
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mouseWorldPos = GetMousePos();
+            PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            for(int i = 1; i < (width * 10) * 2; i += 2)
+            {
+                for (int j = 1; j < (height * 10) * 2; j += 2)
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(new Vector2(i + (int)PathFind.GetGrid().originPos.x, j + (int)PathFind.GetGrid().originPos.y), -Vector2.up);
+                    PathFind.GetGrid().GetXY(new Vector3(i + (int)PathFind.GetGrid().originPos.x, j + (int)PathFind.GetGrid().originPos.y), out int x, out int y);
+                    if (hit.collider.tag == "Wall")
+                    {
+                        PathFind.GetNode(x, y).SetIsWalkable(false);
+                    }
+                    else
+                    {
+                        PathFind.GetNode(x, y).SetIsWalkable(true);
+                    }
+                    PathFind.GetGrid().SetGridObject(x, y, PathFind.GetNode(x, y));
                 }
             }
         }

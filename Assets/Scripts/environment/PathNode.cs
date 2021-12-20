@@ -44,7 +44,10 @@ public class PathNode {
     }
 
     public override string ToString() {
-        return x + "," + y;
+        if (isWalkable)
+            return 1.ToString();
+        else
+            return 0.ToString();
     }
 
 }

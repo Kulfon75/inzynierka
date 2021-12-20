@@ -9,11 +9,13 @@ public class pathFinding
     private int width;
     private int height;
     private pathFinderGrid<PathNode> grid;
+    public static pathFinding Instance { get; private set; }
     private List<PathNode> openList;
     private List<PathNode> closeList;
 
     public pathFinding(int x, int y, Transform prarent)
     {
+        Instance = this;
         width = x;
         height = y;
         grid = new pathFinderGrid<PathNode>(width * 10, height * 10, 2, new Vector3(-10, -10), (pathFinderGrid<PathNode> g, int x, int y) => new PathNode(g, x, y), prarent);
@@ -21,6 +23,27 @@ public class pathFinding
     public pathFinderGrid<PathNode> GetGrid()
     {
         return grid;
+    }
+
+    public List<Vector3> FindPath(Vector3 startWorldPos, Vector3 endWorldPos)
+    {
+        grid.GetXY(startWorldPos, out int startX, out int startY);
+        grid.GetXY(endWorldPos, out int endX, out int endY);
+
+        List<PathNode> path = FindPath(startX, startY, endX, endY);
+        if(path == null)
+        {
+            return null;
+        }
+        else
+        {
+            List<Vector3> vectorPath = new List<Vector3>();
+            foreach(PathNode pathNode in path)
+            {
+                vectorPath.Add(new Vector3(pathNode.x, pathNode.y) * grid.cellSize + Vector3.one * grid.cellSize * .5f + new Vector3(-10,-10));
+            }
+            return vectorPath;
+        }
     }
     public List<PathNode> FindPath(int startX, int startY, int endX, int endY)
     {
@@ -59,6 +82,11 @@ public class pathFinding
             {
                 if (closeList.Contains(neighbourNode))
                 {
+                    continue;
+                }
+                if (!neighbourNode.isWalkable)
+                {
+                    closeList.Add(neighbourNode);
                     continue;
                 }
                 int tentativeGCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbourNode);
