@@ -2,16 +2,18 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class create_grid : MonoBehaviour
+public class gridMenager : MonoBehaviour
 {
     public Transform block;
     public Canvas hud;
+    private hud hudScr;
     System.Random rand = new System.Random();
     private int width;
     private int height;
     private int roomSize;
     private RaycastHit2D hit;
     private pathFinding PathFind;
+    private bool debug = false;
     void Start()
     {
         width = 3;
@@ -19,21 +21,26 @@ public class create_grid : MonoBehaviour
         roomSize = 20;
         createGrid(width, height, roomSize);
         PathFind = new pathFinding(width, height, transform);
+        hudScr = hud.GetComponent<hud>();
     }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mouseWorldPos = GetMousePos();
-            PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
-            List<PathNode> path = PathFind.FindPath(1, 1, x, y);
-            if (path != null)
+            if (debug)
             {
-                for (int i = 0; i < path.Count - 1; i++)
+                Vector3 mouseWorldPos = GetMousePos();
+                PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
+                List<PathNode> path = PathFind.FindPath(1, 1, x, y);
+                if (path != null)
                 {
-                    Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 2f + Vector3.one * -9, new Vector3(path[i + 1].x, path[i + 1].y) * 2f + Vector3.one * -9, Color.green, 5f);
+                    for (int i = 0; i < path.Count - 1; i++)
+                    {
+                        Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 2f + Vector3.one * -9, new Vector3(path[i + 1].x, path[i + 1].y) * 2f + Vector3.one * -9, Color.green, 5f);
+                    }
                 }
             }
+            SetTrap();
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -50,13 +57,34 @@ public class create_grid : MonoBehaviour
                 {
                     RaycastHit2D hit = Physics2D.Raycast(new Vector2(i + (int)PathFind.GetGrid().originPos.x, j + (int)PathFind.GetGrid().originPos.y), -Vector2.up);
                     PathFind.GetGrid().GetXY(new Vector3(i + (int)PathFind.GetGrid().originPos.x, j + (int)PathFind.GetGrid().originPos.y), out int x, out int y);
-                    if (hit.collider.tag == "Wall")
+                    if (hit.collider.tag == "Wall" || PathFind.GetNode(x, y).isTrap)
                     {
                         PathFind.GetNode(x, y).SetIsWalkable(false);
                     }
                     else
                     {
-                        PathFind.GetNode(x, y).SetIsWalkable(true);
+                        if (((i - 1) / 2) % 5 == 0 || ((i + 1) / 2) % 5 == 0)
+                        {
+                            PathFind.GetNode(x, y).SetIsWalkable(true);
+                        }
+                        if (((j - 1) / 2) % 5 == 0 || ((j + 1) / 2) % 5 == 0)
+                        {
+                            PathFind.GetNode(x, y).SetIsWalkable(true);
+                        }
+                    }
+                    if (x - 1 > 0 && y - 1 > 0)
+                    {
+                        if ((PathFind.GetNode(x - 1, y).isTrap || PathFind.GetNode(x, y - 1).isTrap) && !PathFind.GetNode(x, y).isTrap)
+                        {
+                            PathFind.GetNode(x, y).SetIsWalkable(true);
+                        }
+                    }
+                    if(x + 1 < (height * 10) && y + 1 < (height * 10))
+                    {
+                        if ((PathFind.GetNode(x + 1, y).isTrap || PathFind.GetNode(x, y + 1).isTrap) && !PathFind.GetNode(x, y).isTrap)
+                        {
+                            PathFind.GetNode(x, y).SetIsWalkable(true);
+                        }
                     }
                     PathFind.GetGrid().SetGridObject(x, y, PathFind.GetNode(x, y));
                 }
@@ -110,6 +138,19 @@ public class create_grid : MonoBehaviour
         hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeX, GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeY, GameObject.Find("enemy_spawn"));
     }
 
+    public void SetTrap()
+    {
+        if (hudScr.isChecked && hudScr.checkType > 2)
+        {
+            Vector3 mouseWorldPos = GetMousePos();
+            PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
+            if (x >= 0 && y >= 0  && x < (width * 10) && y < (height * 10) && PathFind.GetNode(x, y).isWalkable)
+            {
+                PathFind.GetNode(x, y).SetIsTrap(true);
+                Instantiate(hudScr.block, PathFind.GetGrid().GetPosition(x, y) + new Vector3(1, 1), Quaternion.identity);
+            } 
+        }
+    }
     public Vector3 GetMousePos()
     {
         Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -25,13 +25,15 @@ public class PathNode {
     public int fCost;
 
     public bool isWalkable;
+    public bool isTrap;
     public PathNode cameFromNode;
 
     public PathNode(pathFinderGrid<PathNode> grid, int x, int y) {
         this.grid = grid;
         this.x = x;
         this.y = y;
-        isWalkable = true;
+        isWalkable = false;
+        isTrap = false;
     }
 
     public void CalculateFCost() {
@@ -40,6 +42,12 @@ public class PathNode {
 
     public void SetIsWalkable(bool isWalkable) {
         this.isWalkable = isWalkable;
+        grid.TriggerGridObjectChanged(x, y);
+    }
+
+    public void SetIsTrap(bool isTrap)
+    {
+        this.isTrap = isTrap;
         grid.TriggerGridObjectChanged(x, y);
     }
 

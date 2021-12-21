@@ -16,7 +16,6 @@ public class pathFinderGrid<TGridObj>
     public Vector3 originPos;
     private TextMesh[,] debugTextArray;
     private bool debug = true;
-    private PathNode pathNode;
     public pathFinderGrid(int width, int height, float cellSize, Vector3 originPos, Func<pathFinderGrid<TGridObj>, int, int, TGridObj> createGridObj, Transform parent)
     {
         this.width = width;
@@ -44,7 +43,7 @@ public class pathFinderGrid<TGridObj>
         }
     }
 
-    private Vector3 GetPosition(int x, int y)
+    public Vector3 GetPosition(int x, int y)
     {
         Vector3 Position = new Vector3(x, y) * cellSize + originPos;
         Position = new Vector3(Position.x, Position.y, -2);
@@ -107,6 +106,7 @@ public class pathFinderGrid<TGridObj>
     {
         return gridArray.GetLength(1);
     }
+
     public TextMesh CreateWordText(Transform parent, string text, Vector3 position, int fontSize, Color color, TextAnchor anchor)
     {
         GameObject gameObject = new GameObject("World_text", typeof(TextMesh));

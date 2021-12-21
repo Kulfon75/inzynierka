@@ -35,11 +35,11 @@ public class roomMenager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(hudVariables.checkType == 1)
+        if (hudVariables.checkType == 1)
         {
             hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(placeX, placeY, this.gameObject);
         }
-        if(hudVariables.checkType == 2)
+        if (hudVariables.checkType == 2)
         {
             hud.GetComponentInChildren<place_room>().destroyRoom(placeX, placeY, this.gameObject);
         }
@@ -175,5 +175,12 @@ public class roomMenager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Vector3 GetMousePos()
+    {
+        Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        vec.z = 0;
+        return vec;
     }
 }

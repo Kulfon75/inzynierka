@@ -61,7 +61,6 @@ public class movement_board : MonoBehaviour
                 hit.transform.gameObject.GetComponent<roomMenager>().IsActive(false);
             }
             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.right, 0.1f); //ustawia raycast na pozycje myszki
-            Debug.Log(hit.transform.gameObject.tag);
             if (hit != false && (hit.transform.tag == "PlaceRoom" || hit.transform.tag == "Room"))
             {
                 hit.transform.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
