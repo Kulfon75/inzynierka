@@ -10,6 +10,7 @@ public class buttonFunctions : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private GameObject hud;
     private hud hudVariables;
     public int buttonType;
+    public int cost;
     [SerializeField] GameObject block;
 
     void Start()
@@ -33,5 +34,6 @@ public class buttonFunctions : MonoBehaviour, IPointerEnterHandler, IPointerExit
         hudVariables.checkType = buttonType;
         hudVariables.isChecked = true;
         hudVariables.block = block;
+        hudVariables.cost = cost;
     }
 }

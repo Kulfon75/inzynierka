@@ -26,6 +26,8 @@ public class PathNode {
 
     public bool isWalkable;
     public bool isTrap;
+    public bool isWall;
+    public bool isTrapWalkable;
     public PathNode cameFromNode;
 
     public PathNode(pathFinderGrid<PathNode> grid, int x, int y) {
@@ -34,6 +36,7 @@ public class PathNode {
         this.y = y;
         isWalkable = false;
         isTrap = false;
+        isWall = false;
     }
 
     public void CalculateFCost() {

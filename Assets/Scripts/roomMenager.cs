@@ -125,22 +125,23 @@ public class roomMenager : MonoBehaviour
                 switch (wallNo)
                 {
                     case 0:
-                        foo.transform.localScale = new Vector3(0.1f, 1, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(2, 20);
                         foo.transform.localPosition = new Vector3(-0.45f, 0, -1);
                         break;
                     case 1:
-                        foo.transform.localScale = new Vector3(1, 0.1f, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(20, 2);
                         foo.transform.localPosition = new Vector3(0, 0.45f, -1);
                         break;
                     case 2:
-                        foo.transform.localScale = new Vector3(0.1f, 1, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(2, 20);
                         foo.transform.localPosition = new Vector3(0.45f, 0, -1);
                         break;
                     case 3:
-                        foo.transform.localScale = new Vector3(1, 0.1f, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(20, 2);
                         foo.transform.localPosition = new Vector3(0, -0.45f, -1);
                         break;
                 }
+                foo.GetComponent<BoxCollider2D>().size = foo.GetComponent<SpriteRenderer>().size;
             }
             else
             {
@@ -149,30 +150,32 @@ public class roomMenager : MonoBehaviour
                 switch (wallNo)
                 {
                     case 0:
-                        foo.transform.localScale = new Vector3(0.1f, 0.40f, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(2, 8);
                         foo.transform.localPosition = new Vector3(-0.45f, -0.30f, -1);
-                        foo2.transform.localScale = new Vector3(0.1f, 0.40f, 1);
+                        foo2.GetComponent<SpriteRenderer>().size = new Vector2(2, 8);
                         foo2.transform.localPosition = new Vector3(-0.45f, 0.30f, -1);
                         break;
                     case 1:
-                        foo.transform.localScale = new Vector3(0.40f, 0.1f, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(8, 2);
                         foo.transform.localPosition = new Vector3(-0.30f, 0.45f, -1);
-                        foo2.transform.localScale = new Vector3(0.40f, 0.1f, 1);
+                        foo2.GetComponent<SpriteRenderer>().size = new Vector2(8, 2);
                         foo2.transform.localPosition = new Vector3(0.30f, 0.45f, -1);
                         break;
                     case 2:
-                        foo.transform.localScale = new Vector3(0.1f, 0.40f, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(2, 8);
                         foo.transform.localPosition = new Vector3(0.45f, -0.30f, -1);
-                        foo2.transform.localScale = new Vector3(0.1f, 0.40f, 1);
+                        foo2.GetComponent<SpriteRenderer>().size = new Vector2(2, 8);
                         foo2.transform.localPosition = new Vector3(0.45f, 0.30f, -1);
                         break;
                     case 3:
-                        foo.transform.localScale = new Vector3(0.40f, 0.1f, 1);
+                        foo.GetComponent<SpriteRenderer>().size = new Vector2(8, 2);
                         foo.transform.localPosition = new Vector3(-0.30f, -0.45f, -1);
-                        foo2.transform.localScale = new Vector3(0.40f, 0.1f, 1);
+                        foo2.GetComponent<SpriteRenderer>().size = new Vector2(8, 2);
                         foo2.transform.localPosition = new Vector3(0.30f, -0.45f, -1);
                         break;
                 }
+                foo.GetComponent<BoxCollider2D>().size = foo2.GetComponent<SpriteRenderer>().size;
+                foo2.GetComponent<BoxCollider2D>().size = foo2.GetComponent<SpriteRenderer>().size;
             }
         }
     }

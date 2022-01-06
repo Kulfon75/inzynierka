@@ -9,6 +9,8 @@ TagManager:
   - Room
   - PlaceTrap
   - Wall
+  - Enemy
+  - Trap
   layers:
   - Default
   - TransparentFX

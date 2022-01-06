@@ -6,6 +6,7 @@ public class gridMenager : MonoBehaviour
 {
     public Transform block;
     public Canvas hud;
+    private playerStats PlStats;
     private hud hudScr;
     System.Random rand = new System.Random();
     private int width;
@@ -22,6 +23,7 @@ public class gridMenager : MonoBehaviour
         createGrid(width, height, roomSize);
         PathFind = new pathFinding(width, height, transform);
         hudScr = hud.GetComponent<hud>();
+        PlStats = hud.GetComponent<playerStats>();
     }
     private void Update()
     {
@@ -57,9 +59,11 @@ public class gridMenager : MonoBehaviour
                 {
                     RaycastHit2D hit = Physics2D.Raycast(new Vector2(i + (int)PathFind.GetGrid().originPos.x, j + (int)PathFind.GetGrid().originPos.y), -Vector2.up);
                     PathFind.GetGrid().GetXY(new Vector3(i + (int)PathFind.GetGrid().originPos.x, j + (int)PathFind.GetGrid().originPos.y), out int x, out int y);
-                    if (hit.collider.tag == "Wall" || PathFind.GetNode(x, y).isTrap)
+                    if (hit.collider.tag == "Wall" || (PathFind.GetNode(x, y).isTrap && !PathFind.GetNode(x, y).isTrapWalkable))
                     {
                         PathFind.GetNode(x, y).SetIsWalkable(false);
+                        if(hit.collider.tag == "Wall")
+                            PathFind.GetNode(x, y).isWall = true;
                     }
                     else
                     {
@@ -74,17 +78,21 @@ public class gridMenager : MonoBehaviour
                     }
                     if (x - 1 > 0 && y - 1 > 0)
                     {
-                        if ((PathFind.GetNode(x - 1, y).isTrap || PathFind.GetNode(x, y - 1).isTrap) && !PathFind.GetNode(x, y).isTrap)
+                        if ((PathFind.GetNode(x - 1, y).isTrap || PathFind.GetNode(x, y - 1).isTrap) && !PathFind.GetNode(x, y).isTrap && !PathFind.GetNode(x, y).isWall)
                         {
                             PathFind.GetNode(x, y).SetIsWalkable(true);
                         }
                     }
-                    if(x + 1 < (height * 10) && y + 1 < (height * 10))
+                    if (x + 1 < (height * 10) && y + 1 < (height * 10))
                     {
-                        if ((PathFind.GetNode(x + 1, y).isTrap || PathFind.GetNode(x, y + 1).isTrap) && !PathFind.GetNode(x, y).isTrap)
+                        if ((PathFind.GetNode(x + 1, y).isTrap || PathFind.GetNode(x, y + 1).isTrap) && !PathFind.GetNode(x, y).isTrap && !PathFind.GetNode(x, y).isWall)
                         {
                             PathFind.GetNode(x, y).SetIsWalkable(true);
                         }
+                    }
+                    if(PathFind.GetNode(x, y).isTrapWalkable)
+                    {
+                        PathFind.GetNode(x, y).SetIsWalkable(true);
                     }
                     PathFind.GetGrid().SetGridObject(x, y, PathFind.GetNode(x, y));
                 }
@@ -104,7 +112,7 @@ public class gridMenager : MonoBehaviour
         {
             for(int j = 0; j < y; j++)
             {
-                Transform floor = Instantiate(block, new Vector3(i * width, j * width, 1), Quaternion.identity);
+                Transform floor = Instantiate(block, new Vector3(i * width, j * width, 3), Quaternion.identity);
                 floor.SetParent(this.transform);
                 floor.GetComponent<roomMenager>().placeX = i + 1;
                 floor.GetComponent<roomMenager>().placeY = j + 1;
@@ -140,15 +148,23 @@ public class gridMenager : MonoBehaviour
 
     public void SetTrap()
     {
-        if (hudScr.isChecked && hudScr.checkType > 2)
+        if (hudScr.isChecked && hudScr.checkType > 2 && !PlStats.PlayWave)
         {
-            Vector3 mouseWorldPos = GetMousePos();
-            PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
-            if (x >= 0 && y >= 0  && x < (width * 10) && y < (height * 10) && PathFind.GetNode(x, y).isWalkable)
+            if(hudScr.cost < PlStats.money)
             {
-                PathFind.GetNode(x, y).SetIsTrap(true);
-                Instantiate(hudScr.block, PathFind.GetGrid().GetPosition(x, y) + new Vector3(1, 1), Quaternion.identity);
-            } 
+                Vector3 mouseWorldPos = GetMousePos();
+                PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
+                if (x >= 0 && y >= 0 && x < (width * 10) && y < (height * 10) && !PathFind.GetNode(x, y).isTrap && !PathFind.GetNode(x, y).isWall)
+                {
+                    PlStats.UpdateMoney(-hudScr.cost);
+                    PathFind.GetNode(x, y).SetIsTrap(true);
+                    if(hudScr.checkType > 3)
+                    {
+                        PathFind.GetNode(x, y).isTrapWalkable = true;
+                    }
+                    Instantiate(hudScr.block, PathFind.GetGrid().GetPosition(x, y) + new Vector3(1, 1), Quaternion.identity);
+                }
+            }
         }
     }
     public Vector3 GetMousePos()

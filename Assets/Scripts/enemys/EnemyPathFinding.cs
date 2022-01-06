@@ -5,14 +5,16 @@ using UnityEngine;
 public class EnemyPathFinding : MonoBehaviour
 {
 
-    private const float speed = 5f;
+    private  float speed;
 
     private int currentPathIndex;
     private List<Vector3> pathVectorList;
 
-
-    private void Start()
+    void Start()
     {
+        Vector3 target = GameObject.Find("boss_chamber").transform.position;
+        SetTargetPosition(target);
+        speed = GetComponent<enemyMenager>().speed;
     }
 
     private void Update()
