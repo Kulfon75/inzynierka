@@ -3,13 +3,19 @@ using UnityEngine;
 public class movement : MonoBehaviour
 {
     private int moveSpeed = 5;
+    private float attackCounter;
     [SerializeField] private GameObject spike;
 
     void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.Mouse0))
+        if(Input.GetKey(KeyCode.Mouse0) && attackCounter > 1)
         {
+            attackCounter = 0;
             Attack();
+        }
+        if(attackCounter < 1)
+        {
+            attackCounter += Time.deltaTime;
         }
         if(!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
@@ -47,14 +53,12 @@ public class movement : MonoBehaviour
     private void Attack()
     {
         GameObject newSpike = Instantiate(spike, transform.position, Quaternion.identity);
-        newSpike.transform.LookAt(GetMousePos());
+        newSpike.transform.LookAt(GetMousePos(), Vector3.forward);
         newSpike.GetComponent<iceSpike>().Release = true;
     }
     public Vector3 GetMousePos()
     {
         Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        vec.x = 80;
-        vec.y = 20;
         return vec;
     }
 

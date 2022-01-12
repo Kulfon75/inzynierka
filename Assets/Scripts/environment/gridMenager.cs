@@ -141,7 +141,7 @@ public class gridMenager : MonoBehaviour
         hud.GetComponentInChildren<place_room>().setTakenFalse(x,y);
         hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("boss_chamber").GetComponent<roomMenager>().placeX, GameObject.Find("boss_chamber").GetComponent<roomMenager>().placeY, GameObject.Find("boss_chamber"));
         hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeX, GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeY, GameObject.Find("enemy_spawn"));
-        PathFind = new pathFinding(width, height, transform);
+        PathFind = new pathFinding(x, y, transform);
     }
 
     public void SetTrap()
