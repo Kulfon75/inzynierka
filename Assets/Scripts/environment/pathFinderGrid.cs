@@ -15,7 +15,7 @@ public class pathFinderGrid<TGridObj>
     public float cellSize;
     public Vector3 originPos;
     private TextMesh[,] debugTextArray;
-    private bool debug = false;
+    private bool debug = true;
     public pathFinderGrid(int width, int height, float cellSize, Vector3 originPos, Func<pathFinderGrid<TGridObj>, int, int, TGridObj> createGridObj, Transform parent)
     {
         this.width = width;

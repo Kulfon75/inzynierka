@@ -10,12 +10,14 @@ public class spawnRoomMenager : MonoBehaviour
     public int enemyCouneter;
     private float TimerSpawn;
     private float WaveTimer;
+    [SerializeField] private place_room plRoom;
     private void Start()
     {
         WaveTimer = 0;
         enemyCouneter = 0;
         PlStats = GameObject.FindGameObjectWithTag("Hud").GetComponent<playerStats>();
         PlStats.PlayWave = false;
+        plRoom = GameObject.FindGameObjectWithTag("Menu").GetComponent<place_room>();
     }
     void Update()
     {
@@ -31,7 +33,7 @@ public class spawnRoomMenager : MonoBehaviour
                 TimerSpawn += Time.deltaTime;
             }
 
-            if (WaveTimer > 10)
+            if (WaveTimer > 60)
             {
                 PlStats.UpdateWave();
                 WaveTimer = 0;
@@ -44,6 +46,9 @@ public class spawnRoomMenager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.V))
         {
+            plRoom.IsPath = false;
+            plRoom.checkPath(plRoom.enemySpaposX, plRoom.enemySpaposY, plRoom.bossChposX, plRoom.bossChposY);
+            if(plRoom.IsPath)
             PlStats.PlayWave = true;
         }
     }

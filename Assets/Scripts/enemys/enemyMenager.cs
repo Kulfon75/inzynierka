@@ -5,7 +5,7 @@ using UnityEngine;
 public class enemyMenager : MonoBehaviour
 {
     public float hp;
-    public int speed;
+    public float speed;
     public int rewardAfterKill;
     public float damage;
     private playerStats PlStats;

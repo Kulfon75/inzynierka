@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class gridMenager : MonoBehaviour
 {
@@ -15,19 +16,19 @@ public class gridMenager : MonoBehaviour
     private RaycastHit2D hit;
     private pathFinding PathFind;
     private bool debug = false;
+    public bool generated;
     void Start()
     {
-        width = 3;
-        height = 3;
+        width = 5;
+        height = 5;
         roomSize = 20;
-        createGrid(width, height, roomSize);
-        PathFind = new pathFinding(width, height, transform);
+        generated = false;
         hudScr = hud.GetComponent<hud>();
         PlStats = hud.GetComponent<playerStats>();
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && generated)
         {
             if (debug)
             {
@@ -45,13 +46,13 @@ public class gridMenager : MonoBehaviour
             SetTrap();
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && generated)
         {
             Vector3 mouseWorldPos = GetMousePos();
             PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V) && generated)
         {
             for(int i = 1; i < (width * 10) * 2; i += 2)
             {
@@ -100,7 +101,7 @@ public class gridMenager : MonoBehaviour
         }
     }
 
-    public void createGrid(int x, int y, int width)
+    public void createGrid(int x, int y, int roomSize)
     {
         int enemy_spawn_pos = rand.Next(0, y - 1);
         int boss_chamber_pos = 0;
@@ -112,7 +113,7 @@ public class gridMenager : MonoBehaviour
         {
             for(int j = 0; j < y; j++)
             {
-                Transform floor = Instantiate(block, new Vector3(i * width, j * width, 3), Quaternion.identity);
+                Transform floor = Instantiate(block, new Vector3(i * roomSize, j * roomSize, 3), Quaternion.identity);
                 floor.SetParent(this.transform);
                 floor.GetComponent<roomMenager>().placeX = i + 1;
                 floor.GetComponent<roomMenager>().placeY = j + 1;
@@ -138,12 +139,9 @@ public class gridMenager : MonoBehaviour
         }
         hud.enabled = true;
         hud.GetComponentInChildren<place_room>().setTakenFalse(x,y);
-        /*hud.GetComponent<hud>().block = GameObject.Find("boss_chamber(Clone)");
-        hud.GetComponentInChildren<place_room>().OnPointerDown(null);
-        hud.GetComponent<hud>().block = GameObject.Find("enemy_spawn");
-        hud.GetComponentInChildren<place_room>().OnPointerDown(null);*/
         hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("boss_chamber").GetComponent<roomMenager>().placeX, GameObject.Find("boss_chamber").GetComponent<roomMenager>().placeY, GameObject.Find("boss_chamber"));
         hud.GetComponentInChildren<place_room>().PlaceRoomOnPosition(GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeX, GameObject.Find("enemy_spawn").GetComponent<roomMenager>().placeY, GameObject.Find("enemy_spawn"));
+        PathFind = new pathFinding(width, height, transform);
     }
 
     public void SetTrap()

@@ -15,13 +15,15 @@ public class place_room : MonoBehaviour, IPointerDownHandler
     private bool[,] isVerified; 
     public GameObject[,] floorOb;
     public GameObject floor;
-    [SerializeField] private int bossChposX, bossChposY, enemySpaposX, enemySpaposY;
+    public bool IsPath;
+    [SerializeField] public int bossChposX, bossChposY, enemySpaposX, enemySpaposY;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
             checkPath(enemySpaposX, enemySpaposY, bossChposX, bossChposY);
+            IsPath = false;
             ClearPath();
         }
     }
@@ -151,7 +153,7 @@ public class place_room : MonoBehaviour, IPointerDownHandler
          }
          else
          {
-             Debug.Log("znaleziono");
+            IsPath = true;
          }
     }
 
