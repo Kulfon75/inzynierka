@@ -1478,7 +1478,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   block: {fileID: 7125926216908716201, guid: e5dacd9c18a58924082c2f2941a23afd, type: 3}
   hud: {fileID: 1866237217}
+  width: 0
+  height: 0
   generated: 0
+  TrpasParent: {fileID: 949657961}
+  IsLoad: 0
+  LoadTrapPos: {x: 0, y: 0, z: 0}
+  TrapObjLoad: {fileID: 0}
 --- !u!1 &717286328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1596,6 +1602,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -110.24713}
   m_SizeDelta: {x: 704.9424, y: 160.4943}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &949657961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949657962}
+  m_Layer: 0
+  m_Name: Traps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949657962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949657961}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1078451137}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1004856815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,6 +1984,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 670140121}
+  - {fileID: 949657962}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2854,6 +2891,7 @@ GameObject:
   - component: {fileID: 1866237215}
   - component: {fileID: 1866237219}
   - component: {fileID: 1866237220}
+  - component: {fileID: 1866237221}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Hud
@@ -2973,11 +3011,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   money: 0
+  HP: 0
   wave: 1
   PlayWave: 0
   HpValue: {fileID: 1623551749}
   MoneyValue: {fileID: 1813760929}
   WaveWalue: {fileID: 1072843978}
+--- !u!114 &1866237221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866237214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5a8aada321fa64b9e28ad6d37e1282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrapHolder: {fileID: 0}
+  BoardHolder: {fileID: 0}
+  Traps:
+  - {fileID: 108827367045953359, guid: 16057c6750208d842a34d9a1e4a48404, type: 3}
+  - {fileID: 4634240667199061729, guid: 948089f1443725c4c8a5b61fb2642365, type: 3}
+  - {fileID: 6718293003440523257, guid: 31627b270d62d3b40a0ebf7cc432b701, type: 3}
+  - {fileID: 5822568272773461239, guid: b9cd2497245ce6f44b1b0dc513345d20, type: 3}
 --- !u!1 &1898604998
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class playerStats : MonoBehaviour
 {
     public int money;
-    private float HP;
+    public float HP;
     private float MaxHp;
     public int wave;
 

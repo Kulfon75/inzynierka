@@ -16,7 +16,7 @@ public class place_room : MonoBehaviour, IPointerDownHandler
     public GameObject[,] floorOb;
     public GameObject floor;
     public bool IsPath;
-    [SerializeField] public int bossChposX, bossChposY, enemySpaposX, enemySpaposY;
+    public int bossChposX, bossChposY, enemySpaposX, enemySpaposY;
 
     void Update()
     {

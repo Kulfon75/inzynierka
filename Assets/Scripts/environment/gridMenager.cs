@@ -10,13 +10,18 @@ public class gridMenager : MonoBehaviour
     private playerStats PlStats;
     private hud hudScr;
     System.Random rand = new System.Random();
-    private int width;
-    private int height;
+    public int width;
+    public int height;
     private int roomSize;
     private RaycastHit2D hit;
     private pathFinding PathFind;
     private bool debug = false;
     public bool generated;
+    [SerializeField] private GameObject TrpasParent;
+    private place_room PlRoom;
+    public bool IsLoad = false;
+    public Vector3 LoadTrapPos;
+    public GameObject TrapObjLoad;
     void Start()
     {
         width = 5;
@@ -25,6 +30,7 @@ public class gridMenager : MonoBehaviour
         generated = false;
         hudScr = hud.GetComponent<hud>();
         PlStats = hud.GetComponent<playerStats>();
+        PlRoom = GameObject.FindGameObjectWithTag("Menu").GetComponent<place_room>();
     }
     private void Update()
     {
@@ -103,11 +109,18 @@ public class gridMenager : MonoBehaviour
 
     public void createGrid(int x, int y, int roomSize)
     {
+        width = x;
+        height = y;
         int enemy_spawn_pos = rand.Next(0, y - 1);
         int boss_chamber_pos = 0;
         while(enemy_spawn_pos == boss_chamber_pos)
         {
             boss_chamber_pos = rand.Next(0, y - 1);
+        }
+        if(IsLoad)
+        {
+            enemy_spawn_pos = PlRoom.enemySpaposY;
+            boss_chamber_pos = PlRoom.bossChposY;
         }
         for (int i = 0; i < x; i++)
         {
@@ -150,8 +163,16 @@ public class gridMenager : MonoBehaviour
         {
             if(hudScr.cost < PlStats.money)
             {
-                Vector3 mouseWorldPos = GetMousePos();
-                PathFind.GetGrid().GetXY(mouseWorldPos, out int x, out int y);
+                int x, y;
+                if(!IsLoad)
+                {
+                    Vector3 mouseWorldPos = GetMousePos();
+                    PathFind.GetGrid().GetXY(mouseWorldPos, out x, out y);
+                }
+                else
+                {
+                    PathFind.GetGrid().GetXY(LoadTrapPos, out x, out y);
+                }
                 if (x >= 0 && y >= 0 && x < (width * 10) && y < (height * 10) && !PathFind.GetNode(x, y).isTrap && !PathFind.GetNode(x, y).isWall)
                 {
                     PlStats.UpdateMoney(-hudScr.cost);
@@ -160,7 +181,14 @@ public class gridMenager : MonoBehaviour
                     {
                         PathFind.GetNode(x, y).isTrapWalkable = true;
                     }
-                    Instantiate(hudScr.block, PathFind.GetGrid().GetPosition(x, y) + new Vector3(1, 1), Quaternion.identity);
+                    if (!IsLoad)
+                    {
+                        Instantiate(hudScr.block, PathFind.GetGrid().GetPosition(x, y) + new Vector3(1, 1), Quaternion.identity, TrpasParent.transform);
+                    }
+                    else
+                    {
+                        Instantiate(TrapObjLoad, PathFind.GetGrid().GetPosition(x, y) + new Vector3(1, 1), Quaternion.identity, TrpasParent.transform);
+                    }
                 }
             }
         }
